@@ -4,9 +4,11 @@ import { getDatabase, ref, set } from 'firebase/database'
 const PlayScreen = ({ changePlay, changeEnd, imageList }) => {
     const [selectorActive, setSelectorActive] = useState(false)
     const [time, setTime] = useState(Date.now());
-    const [waldo, setWaldo] = useState(true)
-    const [frank, setFrank] = useState(true)
-    const [bella, setBella] = useState(true)
+    const [waldo, setWaldo] = useState(false)
+    const [frank, setFrank] = useState(false)
+    const [bella, setBella] = useState(false)
+    const [clickNumber, setClickNumber] = useState(0)
+    const [gameover, setGameover] = useState(false)
     
     const start = Date.now()
     
@@ -34,31 +36,12 @@ const PlayScreen = ({ changePlay, changeEnd, imageList }) => {
         };
     }, []);
 
-    let clickNumber
     const mapClick = (e) => {
         setSelectorActive(true)
         changeSelectorPosition(e)
-        clickNumber = e.pageX / e.pageY
-        console.log(clickNumber)
+        setClickNumber(e.pageX / e.pageY)
     }
-    const foundCharacter = (character) => {
-        switch (character) {
-            case 'waldo':
-                setWaldo(false)
-                break
-            case 'frank':
-                setFrank(false)
-                break
-            case 'bella':
-                setBella(false)
-                break
-            default:
-                console.log('foundCharacter failed')
-        }
-    } 
-    const addScoreToLeaderBoard = () => {
 
-    }
     const changeSelectorPosition = (e) => {
         let x = e.pageX
         let y = e.pageY
@@ -73,27 +56,39 @@ const PlayScreen = ({ changePlay, changeEnd, imageList }) => {
         changeEnd(true)
     }
     const selectorClick = (character, number) => {
-        console.log(number)
-        if (character === 'waldo' && clickNumber >= 1 && clickNumber <= 1.1) {
-            setWaldo(false)
+        if (character === 'waldo' && number >= 0.95 && number <= 1.05) {
+            setWaldo(true)
+            document.getElementById('waldo').classList.add('found')
             console.log('waldo found')
-        } else  if (character === 'frank' && clickNumber >= 1.1 && clickNumber <= 1.2) {
-            setFrank(false)
+        } else  if (character === 'frank' && number >= 1 && number <= 1.1) {
+            setFrank(true)
+            document.getElementById('frank').classList.add('found')
             console.log('frank found')
-        } else  if (character === 'bella' && clickNumber >= 1.55 && clickNumber <= 1.65) {
-            setBella(false)
+        } else  if (character === 'bella' && number >= 1.39 && number <= 1.57) {
+            setBella(true)
+            document.getElementById('bella').classList.add('found')
             console.log('bella found')
+        }
+        checkGameover()
+    }
+
+    const checkGameover = () => {
+        if (waldo && frank && bella) {
+            changeScreen()
         }
     }
     
     return (
     <div className="PlayScreen">
         <nav>
-            <button onClick={changeScreen}>remove play</button>
-            <div>
-                <img className="character" src={bellaimg} />
-                <img className="character" src={frankimg} />
-                <img className="character" src={waldoimg} />
+            <h3>Where's Waldo</h3>
+            <div className="characters">
+                <p>Easy:</p>
+                <img id="bella" className="character" src={bellaimg} />
+                <p>Medium:</p>
+                <img id="frank" className="character" src={frankimg} />
+                <p>Hard:</p>
+                <img id="waldo" className="character" src={waldoimg} />
             </div>
             <div>{time} sec</div>
         </nav>
