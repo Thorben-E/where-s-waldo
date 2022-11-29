@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+}
+
+.App {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.BeginScreen-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+} 
+
+.BeginScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 300px;
+    width: 500px;
+    background-color: gray;
+}
+
+.PlayScreen {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+nav {
+    display: flex;
+    font-size: 20px;
+    justify-content:space-between;
+    padding: 20px;
+    height: 5%;
+    background-color: gray;
+    position: sticky;
+    top: 0;
+}
+
+main {
+    height: 90%;
+    width: 100%;
+}
+
+img {
+    width: 100vw;
+}
+
+.selector {
+    position: fixed;
+    opacity: 0;
+    background-color: white;
+}
+
+.selectorcell {
+    border: 1px black solid;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.selectorcell:hover {
+    background-color: black;
+    color: white;
+}
+
+.character {
+    width: 50px;
+    height: 50px;
+}
+
+.EndScreen {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.left {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.leaderboard {
+    background-color: grey;
+    height: 90vh;
+    width: 40vw;
+}
+
+.right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.score {
+    background-color: darkgray;
+    height: 45vh;
+    width: 40vw;
+}
+
+.EndScreenBtn {
+    height: 75px;
+    width: 150px;
+    font-size: 20px;
+    border: black 2px solid;
+    background-color: white;
+}
+
+.EndScreenBtn:hover {
+    border: none;
+    background-color: black;
+    color: white;
+}
+
+.EndScreenBtn-container {
+    width: 40vw;
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
