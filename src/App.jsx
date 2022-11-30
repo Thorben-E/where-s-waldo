@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import { initializeApp } from 'firebase/app'
-import { getFirestore, collection, doc, getDocs, addDoc } from 'firebase/firestore'
+import { getFirestore, collection, doc, getDocs, addDoc, onSnapshot } from 'firebase/firestore'
 import { getDownloadURL, getStorage, listAll, ref } from 'firebase/storage'
 import BeginScreen from './components/BeginScreen';
 import PlayScreen from './components/PlayScreen';
@@ -20,17 +20,7 @@ const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app)
 export const firestore = getFirestore();
 const Leaderboard = doc(firestore, 'Leaderboard/Leaderboard')
-
 const Ref = collection(Leaderboard, 'Leaderboard')
-
-let scores
-getDocs(Ref)
-  .then((snapshot) => {
-    scores = []
-    snapshot.docs.forEach((doc) => {
-      scores.push({ ...doc.data()})
-    })
-  })
 
 const AddScore = (name, score) => {
   addDoc(Ref, {
@@ -39,15 +29,24 @@ const AddScore = (name, score) => {
   })
 }
 
-/* AddScore('tim', 30) */
-
 function App() {
-  const [begin, setBegin] = useState(false)
+  const [begin, setBegin] = useState(true)
   const [play, setPlay] = useState(false)
-  const [end, setEnd] = useState(true)
+  const [end, setEnd] = useState(false)
   const [imageList, setImageList] = useState([])
-  const [background, setBackground] = useState([imageList[0]])
+  const [scoreboard, setScoreboard] = useState()
   const imageListRef = ref(storage, "images/")
+  const [score, setScore] = useState()
+
+  let scores
+  onSnapshot(Ref, (snapshot) => {
+    scores = []
+    snapshot.docs.forEach((doc) => {
+      scores.push({ ...doc.data()})
+    })
+     
+    setScoreboard(scores)
+  })
 
   useEffect(() => {
     listAll(imageListRef).then((response) => {
@@ -62,8 +61,8 @@ function App() {
   return (
     <div className="App">
       {begin && <BeginScreen changeBegin={setBegin} changePlay={setPlay}/>}
-      {play && <PlayScreen changePlay={setPlay} changeEnd={setEnd} imageList={imageList} />}
-      {end && <EndScreen changeEnd={setEnd} scoresArray={scores} changeBegin={setPlay} />}
+      {play && <PlayScreen changePlay={setPlay} setScore={setScore} changeEnd={setEnd} imageList={imageList} />}
+      {end && <EndScreen changeEnd={setEnd} score={score} AddScore={AddScore} scoresArray={scoreboard} changeBegin={setPlay} />}
     </div>
   )
 }

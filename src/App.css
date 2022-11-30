@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 body {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .App {
     display: flex;
     width: 100vw;
     height: 100vh;
+    background-color: black;
 }
 
 .BeginScreen-container {
@@ -14,6 +17,7 @@ body {
     width: 100vw;
     justify-content: center;
     align-items: center;
+    background-image: url('./assets/beginscreenbg.png');
 } 
 
 .BeginScreen {
@@ -22,9 +26,35 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    height: 300px;
-    width: 500px;
-    background-color: gray;
+    height: 400px;
+    width: 600px;
+    background-color: white;
+    border: black 2px solid;
+    border-radius: 10px;
+}
+
+.Beginscreen-text {
+    width: 400px;
+    text-align: center;
+}
+
+.BeginScreen-characters {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.BeginScreen-button {
+    margin: 20px;
+    background-color: white;
+    border: 1px black solid;
+    border-radius: 6px;
+    height: 30px;
+    width: 50px;
+}
+
+.BeginScreen-button:hover {
+    background-color: lightgrey;
 }
 
 .PlayScreen {
@@ -41,7 +71,7 @@ nav {
     align-items: center;
     padding: 20px;
     height: 5%;
-    background-color: gray;
+    background-color: white;
     position: sticky;
     top: 0;
 }
@@ -92,6 +122,7 @@ img {
     width: 100vw;
     justify-content: center;
     align-items: center;
+    background-image: url('./assets/beginscreenbg.png');
 }
 
 .left {
@@ -102,9 +133,22 @@ img {
 }
 
 .leaderboard {
-    background-color: grey;
     height: 90vh;
     width: 40vw;
+    background-color: white;
+    border: 2px black solid;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.leaderboardData {
+    height: 90vh;
+    overflow: auto;
+    width: 40vw;
+    text-align: center;
 }
 
 .right {
@@ -116,9 +160,16 @@ img {
 }
 
 .score {
-    background-color: darkgray;
     height: 45vh;
     width: 40vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    background-color: white;
+    border: 2px black solid;
+    border-radius: 10px;
 }
 
 .EndScreenBtn {
@@ -126,13 +177,12 @@ img {
     width: 150px;
     font-size: 20px;
     border: black 2px solid;
+    border-radius: 10px;
     background-color: white;
 }
 
 .EndScreenBtn:hover {
-    border: none;
-    background-color: black;
-    color: white;
+    background-color: lightgrey;
 }
 
 .EndScreenBtn-container {
@@ -143,10 +193,23 @@ img {
     align-items: center;
 }
 
+.Endscreen-button {
+    margin: 20px;
+    background-color: white;
+    border: 1px black solid;
+    border-radius: 6px;
+    height: 30px;
+    width: 100px;
+}
+
+.Endscreen-button:hover {
+    background-color: lightgrey;
+}
+
 .popup {
-    background-color: black;
+    background-color: white;
+    border: 2px black solid;
     border-radius: 10px;
-    color: white;
     display: flex;
     flex-direction: column;
     width: 400px;

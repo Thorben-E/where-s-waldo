@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { getDatabase, ref, set } from 'firebase/database'
 
-const PlayScreen = ({ changePlay, changeEnd, imageList }) => {
+const PlayScreen = ({ changePlay, setScore, changeEnd, imageList }) => {
     const [selectorActive, setSelectorActive] = useState(false)
     const [time, setTime] = useState(Date.now());
     const [waldo, setWaldo] = useState(false)
     const [frank, setFrank] = useState(false)
     const [bella, setBella] = useState(false)
     const [clickNumber, setClickNumber] = useState(0)
-    const [gameover, setGameover] = useState(false)
-    
     const start = Date.now()
     
     let background;
@@ -69,11 +67,13 @@ const PlayScreen = ({ changePlay, changeEnd, imageList }) => {
             document.getElementById('bella').classList.add('found')
             console.log('bella found')
         }
+        document.getElementById('selector').style.opacity = 0
         checkGameover()
     }
 
     const checkGameover = () => {
         if (waldo && frank && bella) {
+            setScore(time)
             changeScreen()
         }
     }
@@ -83,11 +83,11 @@ const PlayScreen = ({ changePlay, changeEnd, imageList }) => {
         <nav>
             <h3>Where's Waldo</h3>
             <div className="characters">
-                <p>Easy:</p>
+                <p>Bella:</p>
                 <img id="bella" className="character" src={bellaimg} />
-                <p>Medium:</p>
+                <p>Frank:</p>
                 <img id="frank" className="character" src={frankimg} />
-                <p>Hard:</p>
+                <p>Waldo:</p>
                 <img id="waldo" className="character" src={waldoimg} />
             </div>
             <div>{time} sec</div>

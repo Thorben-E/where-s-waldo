@@ -1,19 +1,11 @@
 import React, { useState } from "react"
 
-const EndScreen = ({ changeEnd, changeBegin, scoresArray}) => {
+const EndScreen = ({ changeEnd, changeBegin, score, scoresArray, AddScore}) => {
     const [popup, setPopup] = useState(true)
     const [name, setName] = useState()
-    let results;
-    let scoreboard = []
-    if (scoresArray != undefined) {
-        results = scoresArray
-        console.log(results)
-        results.forEach(result => {
-            scoreboard.push(<p key={result.name}>{result.name}: {result.score} sec</p>)
-        })
-    }
-      
-    let time;
+    const [scoreboard, setScoreboard] = useState([])
+    const [username, setUsername] = useState()
+
     const changeScreen = () => {
         changeEnd(false)
         changeBegin(true)
@@ -22,8 +14,28 @@ const EndScreen = ({ changeEnd, changeBegin, scoresArray}) => {
         setName(e.target.value)
         console.log(name)
     }
-    const pushScore = (time, name) => {
+    const pushScore = (name, time) => {
         setPopup(false)
+        setUsername(name)
+        if (name === undefined) {
+            AddScore('anonymous', time)
+        } else {
+            AddScore(name, time)
+        }
+        sortAndReturn()
+    }
+
+    const sortAndReturn = () => {
+        let arr = sortArray()
+        console.log(arr)
+        setScoreboard(arr.map((score) => <p key={score.id}>{score.name}: {score.score} sec</p>))
+    }
+
+    const sortArray = () => {
+        scoresArray.sort((a,b) => {
+            return a.score - b.score;
+        })
+        return scoresArray
     }
 
     return (
@@ -31,21 +43,24 @@ const EndScreen = ({ changeEnd, changeBegin, scoresArray}) => {
         {popup && 
             <div className="popup">
                 <h2>You won</h2>
-                <p>Time: {}</p>
-                <label htmlFor="name">Username:</label>
+                <p>Score: {score} sec</p>
+                <label htmlFor="name">Input username:</label>
                 <br></br>
                 <input type="text" onChange={(e) => handleNameChange(e)} name="name" id="name" />
                 <br></br>
-                <button onClick={() => pushScore(name, time)}>Submit Score</button>
+                <button className="Endscreen-button" onClick={() => pushScore(name, score)}>Submit Score</button>
             </div>}
         {!popup && <>
             <div className="left">
                 <div className="leaderboard">
-                    {scoreboard}
+                    <div className="leaderboardData">{scoreboard}</div> 
                 </div>
             </div>
             <div className="right">
-                <div className="score">Your score</div>
+                <div className="score">
+                    <p>Username: {username}</p>
+                    <p>Time: {score}</p>
+                </div>
                 <div className="EndScreenBtn-container">
                     <button className="EndScreenBtn" onClick={changeScreen}>Play Again</button>
                 </div>
